@@ -12,7 +12,7 @@ import logging
 import psycopg2
 import json
 
-from functions import more_comments, comments
+from functions import crawling_functions
 from selenium import webdriver
 from selenium.webdriver import ActionChains
 from selenium.webdriver.chrome.service import Service
@@ -38,10 +38,10 @@ def etl(**context):
     driver.get(context["params"]["link"])
     while(1): # 모든 댓글이 나올때까지 더보기 클릭
         try:
-            more_comments(driver)
+            crawling_functions.more_comments(driver)
         except:
             break
-    comments(driver)
+    crawling_functions.comments(driver)
     
 etl = PythonOperator(
     task_id = 'etl',
