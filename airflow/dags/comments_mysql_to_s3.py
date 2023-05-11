@@ -21,6 +21,14 @@ from webdriver_manager.chrome import ChromeDriverManager
 import pandas as pd
 import time
 
+options = webdriver.ChromeOptions()
+options.add_argument('--headless')
+# options.add_argument('window-size=1200x600')
+options.add_argument('--no-sandbox')
+options.add_argument('--disable-dev-shm-usage')
+
+driver = webdriver.Chrome(chrome_options=options)
+
 dag = DAG(
     dag_id = 'Comment_Update',
     start_date = datetime(2023,4,20), # 날짜가 미래인 경우 실행이 안됨
@@ -34,7 +42,7 @@ dag = DAG(
 )
 
 def etl(**context):
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+    # driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
     driver.get(context["params"]["link"])
     while(1): # 모든 댓글이 나올때까지 더보기 클릭
         try:
