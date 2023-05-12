@@ -9,6 +9,12 @@ import os
 import urllib.request
 from selenium.webdriver.common.keys import Keys
 from datetime import datetime
+from airflow.providers.mysql.hooks.mysql import MySqlHook
+
+def get_MySQL_connection():
+    hook = MySqlHook(mysql_conn_id='mysql')
+    conn = hook.get_conn()
+    return conn.cursor(), conn
 
 # 출판사, 제목, 기자, 본문, 댓글창
 def main(driver):
@@ -80,12 +86,11 @@ def comments_analysis(driver):
     return total, self_removed, auto_removed, male, female, age_10, age_20, age_30, age_40, age_50, age_60, now
 
 # 전체 댓글 수집
-def comments(driver):
-    import pymysql
-    con = pymysql.connect(host='localhost', user='root', password='', \
-                       db='comments_db', charset='utf8') # 한글처리 (charset = 'utf8')
-    cur = con.cursor()
-    sql = "BEGIN;DELETE FROM comments_db.comments;"
+def comments(driver, title, now):
+    hook = MySqlHook(mysql_conn_id='mysql')
+    conn = hook.get_conn()
+    cur = conn.cursor()
+    cur.execute("DELETE FROM comments_db.comments;")
     # time.sleep(1)
     comment_area = driver.find_element(By.CLASS_NAME, "newsct_wrapper._GRID_TEMPLATE_COLUMN._STICKY_CONTENT")
     total_comments = comment_area.find_element(By.ID, "cbox_module")
@@ -102,7 +107,7 @@ def comments(driver):
             # for j in good_bads:
             #     temp.append(j.text)
             # comments_list.append(temp)
-            sql += f"INSERT INTO comments_db.comments VALUES ('{comment}', '{good_bads[0].text}', '{good_bads[1].text}');"
-    sql += "END;"
-    cur.execute(sql)  
+            sql = f"INSERT INTO comments_db.comments VALUES ('{title}', '{comment}', '{good_bads[0].text}', '{good_bads[1].text}', '{now}');"
+            cur.execute(sql)
+    conn.commit() 
     # return comments_list

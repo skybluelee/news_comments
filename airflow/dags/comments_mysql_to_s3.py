@@ -20,14 +20,14 @@ from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
 import pandas as pd
 import time
+from selenium.webdriver.chrome.options import Options
+from airflow.providers.mysql.hooks.mysql import MySqlHook
 
-options = webdriver.ChromeOptions()
+options = Options()
 options.add_argument('--headless')
-# options.add_argument('window-size=1200x600')
+options.add_argument('window-size=1200x600')
 options.add_argument('--no-sandbox')
 options.add_argument('--disable-dev-shm-usage')
-
-driver = webdriver.Chrome(chrome_options=options)
 
 dag = DAG(
     dag_id = 'Comment_Update',
@@ -41,22 +41,32 @@ dag = DAG(
     }
 )
 
+def get_MySQL_connection(autocommit=False):
+    hook = MySqlHook(mysql_conn_id='mysql')
+    conn = hook.get_conn()
+    conn.autocommit = autocommit
+    return conn.cursor()
+
 def etl(**context):
-    # driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
-    driver.get(context["params"]["link"])
-    while(1): # 모든 댓글이 나올때까지 더보기 클릭
-        try:
-            crawling_functions.more_comments(driver)
-        except:
-            break
-    crawling_functions.comments(driver)
+    remote_webdriver = 'remote_chromedriver'
+    with webdriver.Remote(f'{remote_webdriver}:4444/wd/hub', options=options) as driver:
+        # Scraping part
+        driver.get(context["params"]["link"])
+        pub, title, reporter, article = crawling_functions.main(driver)
+        total, self_removed, auto_removed, male, female, age_10, age_20, age_30, age_40, age_50, age_60, now = crawling_functions.comments_analysis(driver)
+        while(1): # 모든 댓글이 나올때까지 더보기 클릭
+            try:
+                crawling_functions.more_comments(driver)
+            except:
+                break
+        crawling_functions.comments(driver, title, now)
     
 etl = PythonOperator(
     task_id = 'etl',
     python_callable = etl,
     # 서울의 위도/경도
     params = {
-        "link": "https://n.news.naver.com/mnews/article/comment/005/0001606450",
+        "link": "https://n.news.naver.com/article/119/0002709755",
     },
     dag = dag
 )
