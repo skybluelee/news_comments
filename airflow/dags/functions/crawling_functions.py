@@ -10,6 +10,18 @@ import urllib.request
 from selenium.webdriver.common.keys import Keys
 from datetime import datetime
 from airflow.providers.mysql.hooks.mysql import MySqlHook
+import logging
+
+def sentence_filter(intro):
+    for idx, value in enumerate(intro):
+        if value == "\n":
+            intro = intro[:idx] + ' ' + intro[idx + 1:]           
+    for idx, value in enumerate(intro):
+        if value == "'":
+            intro = intro[:idx] + '^' + intro[idx + 1:]
+        elif value == '"':
+            intro = intro[:idx] + '*' + intro[idx + 1:]
+    return intro
 
 def get_MySQL_connection():
     hook = MySqlHook(mysql_conn_id='mysql')
@@ -19,7 +31,7 @@ def get_MySQL_connection():
 
 # 출판사, 제목, 기자, 본문, 댓글창
 def main(driver):
-    time.sleep(1)
+    time.sleep(10)
     total = driver.find_element(By.CLASS_NAME, "end_container")
     title_area = total.find_element(By.CLASS_NAME, "newsct_wrapper._GRID_TEMPLATE_COLUMN._STICKY_CONTENT")
     title_info = title_area.find_element(By.CLASS_NAME, "media_end_head_title")
@@ -30,26 +42,31 @@ def main(driver):
     reporter = rep_info.text
     article_info = title_area.find_element(By.ID, "dic_area")
     article = article_info.text
-
     try: # 호감순 댓글 확인 가능
         more_comments = title_area.find_element(By.CLASS_NAME, "u_cbox_btn_view_comment")
-        comment_exposed = 1
+        comment_exposed = 'yes'
     except: # 댓글 확인 불가
         more_comments = title_area.find_element(By.CLASS_NAME, "simplecmt_link.is_navercomment")
-        comment_exposed = 0
-
+        comment_exposed = 'no'
+    time.sleep(1)
     more_comments.click()
+
+    title = sentence_filter(title)
+    article = sentence_filter(article)
 
     # 메인 기사에서 수집한 데이터는 시간에 따라 바뀌지 않으므로 예외처리 진행
     conn, cur = get_MySQL_connection()
+    time.sleep(1)
     try:
+        logging.info("start")
         sql = f"INSERT INTO comments_db.articles VALUES ('{title}', '{pub}', '{reporter}', '{article}', '{comment_exposed}');"
+        logging.info("sql")
+        print(sql)
         cur.execute(sql)
+        logging.info("execute")
         conn.commit() 
     except: # title이 PK임
         pass
-    
-    time.sleep(0.5)
     return title
 
 # 더보기 클릭
@@ -97,7 +114,7 @@ def comments_analysis(driver, title):
     timestamp = datetime.now()
 
     conn, cur = get_MySQL_connection()
-    sql = f"CREATE TABLE IF NOT EXISTS comments_db.users_dist_'{title[:10]}' (title varchar(255),\
+    sql = f"CREATE TABLE IF NOT EXISTS comments_db.users_dist (title varchar(255),\
                                                                                 total int(5),  \
                                                                                 self_removed int(5), \
                                                                                 auto_removed int(5), \
@@ -109,7 +126,7 @@ def comments_analysis(driver, title):
                                                                                 age_40 int(3), \
                                                                                 age_50 int(3), \
                                                                                 age_60 int(3), \
-                                                                                timestamp datetime(),\
+                                                                                timestamp datetime,\
                                                                                 primary key (timestamp)\
                                                                                 ) engine=InnoDB default charset=utf8;"
     cur.execute(sql)
@@ -123,11 +140,11 @@ def comments_analysis(driver, title):
 # 전체 댓글 수집
 def comments(driver, title, timestamp):
     conn, cur = get_MySQL_connection()
-    sql = f"CREATE TABLE IF NOT EXISTS comments_db.comments_dist_'{title[:10]}' (title varchar(255),\
+    sql = f"CREATE TABLE IF NOT EXISTS comments_db.comments_dist (title varchar(255),\
                                                                                 comment varchar(300),  \
                                                                                 good int(6), \
                                                                                 bad int(6), \
-                                                                                timestamp datetime(), \
+                                                                                timestamp datetime, \
                                                                                 primary key (comment, timestamp)\
                                                                                 ) engine=InnoDB default charset=utf8;"
     cur.execute(sql)

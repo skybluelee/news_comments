@@ -32,7 +32,7 @@ options.add_argument('--disable-dev-shm-usage')
 dag = DAG(
     dag_id = 'Comment_Update',
     start_date = datetime(2023,5,10), # 날짜가 미래인 경우 실행이 안됨
-    end_date = datetime(2023, 5, 13, 12, 0),
+    # end_date = datetime(2023, 5, 13, 6, 0), # UTC인지 확인, datetime은 한국시간 기준인지 확인
     schedule = '0/10 * * * *',  # 10분마다 업데이트
     max_active_runs = 1,
     catchup = False,
@@ -48,14 +48,15 @@ def etl(**context):
         # Scraping part
         driver.get(context["params"]["link"])
         title = crawling_functions.main(driver)
-        timestamp = crawling_functions.comments_analysis(driver)
+        break
+        # timestamp = crawling_functions.comments_analysis(driver, title)
 
-        while(1): # 모든 댓글이 나올때까지 더보기 클릭
-            try:
-                crawling_functions.more_comments(driver)
-            except:
-                break
-        crawling_functions.comments(driver, title, timestamp)
+        # while(1): # 모든 댓글이 나올때까지 더보기 클릭
+        #     try:
+        #         crawling_functions.more_comments(driver)
+        #     except:
+        #         break
+        # crawling_functions.comments(driver, title, timestamp)
     
 etl = PythonOperator(
     task_id = 'etl',
