@@ -31,42 +31,38 @@ options.add_argument('--disable-dev-shm-usage')
 
 dag = DAG(
     dag_id = 'Comment_Update',
-    start_date = datetime(2023,4,20), # 날짜가 미래인 경우 실행이 안됨
+    start_date = datetime(2023,5,10), # 날짜가 미래인 경우 실행이 안됨
+    end_date = datetime(2023, 5, 13, 12, 0),
     schedule = '0/10 * * * *',  # 10분마다 업데이트
     max_active_runs = 1,
     catchup = False,
     default_args = {
         'retries': 1,
-        'retry_delay': timedelta(minutes=3),
+        'retry_delay': timedelta(minutes=1),
     }
 )
-
-def get_MySQL_connection(autocommit=False):
-    hook = MySqlHook(mysql_conn_id='mysql')
-    conn = hook.get_conn()
-    conn.autocommit = autocommit
-    return conn.cursor()
 
 def etl(**context):
     remote_webdriver = 'remote_chromedriver'
     with webdriver.Remote(f'{remote_webdriver}:4444/wd/hub', options=options) as driver:
         # Scraping part
         driver.get(context["params"]["link"])
-        pub, title, reporter, article = crawling_functions.main(driver)
-        total, self_removed, auto_removed, male, female, age_10, age_20, age_30, age_40, age_50, age_60, now = crawling_functions.comments_analysis(driver)
+        title = crawling_functions.main(driver)
+        timestamp = crawling_functions.comments_analysis(driver)
+
         while(1): # 모든 댓글이 나올때까지 더보기 클릭
             try:
                 crawling_functions.more_comments(driver)
             except:
                 break
-        crawling_functions.comments(driver, title, now)
+        crawling_functions.comments(driver, title, timestamp)
     
 etl = PythonOperator(
     task_id = 'etl',
     python_callable = etl,
-    # 서울의 위도/경도
+    # 메인 기사 링크
     params = {
-        "link": "https://n.news.naver.com/article/119/0002709755",
+        "link": "https://n.news.naver.com/mnews/article/079/0003769435?sid=100",
     },
     dag = dag
 )
