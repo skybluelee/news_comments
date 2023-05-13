@@ -115,22 +115,22 @@ def comments_analysis(driver, title):
 
     conn, cur = get_MySQL_connection()
     sql = f"CREATE TABLE IF NOT EXISTS comments_db.users_dist (title varchar(255),\
-                                                                                total int(5),  \
-                                                                                self_removed int(5), \
-                                                                                auto_removed int(5), \
-                                                                                male int(3), \
-                                                                                female int(3), \
-                                                                                age_10 int(3), \
-                                                                                age_20 int(3), \
-                                                                                age_30 int(3), \
-                                                                                age_40 int(3), \
-                                                                                age_50 int(3), \
-                                                                                age_60 int(3), \
-                                                                                timestamp datetime,\
-                                                                                primary key (timestamp)\
-                                                                                ) engine=InnoDB default charset=utf8;"
+                                                                total int(5),  \
+                                                                self_removed int(5), \
+                                                                auto_removed int(5), \
+                                                                male int(3), \
+                                                                female int(3), \
+                                                                age_10 int(3), \
+                                                                age_20 int(3), \
+                                                                age_30 int(3), \
+                                                                age_40 int(3), \
+                                                                age_50 int(3), \
+                                                                age_60 int(3), \
+                                                                timestamp datetime,\
+                                                                primary key (timestamp)\
+                                                                ) engine=InnoDB default charset=utf8;"
     cur.execute(sql)
-    sql = f"INSERT INTO comments_db.users_dist_'{title[:10]}' VALUES ('{title}', '{total}', '{self_removed}', '{auto_removed}',\
+    sql = f"INSERT INTO comments_db.users_dist VALUES ('{title}', '{total}', '{self_removed}', '{auto_removed}',\
              '{male}', '{female}', '{age_10}', '{age_20}','{age_30}', '{age_40}', '{age_50}', '{age_60}', '{timestamp}');"
     cur.execute(sql)
     conn.commit()     
@@ -140,13 +140,13 @@ def comments_analysis(driver, title):
 # 전체 댓글 수집
 def comments(driver, title, timestamp):
     conn, cur = get_MySQL_connection()
-    sql = f"CREATE TABLE IF NOT EXISTS comments_db.comments_dist (title varchar(255),\
-                                                                                comment varchar(300),  \
-                                                                                good int(6), \
-                                                                                bad int(6), \
-                                                                                timestamp datetime, \
-                                                                                primary key (comment, timestamp)\
-                                                                                ) engine=InnoDB default charset=utf8;"
+    sql = f"CREATE TABLE IF NOT EXISTS comments_db.comments (title varchar(255),\
+                                                            comment varchar(300),  \
+                                                            good int(6), \
+                                                            bad int(6), \
+                                                            timestamp datetime, \
+                                                            primary key (comment, timestamp)\
+                                                            ) engine=InnoDB default charset=utf8;"
     cur.execute(sql)
     comment_area = driver.find_element(By.CLASS_NAME, "newsct_wrapper._GRID_TEMPLATE_COLUMN._STICKY_CONTENT")
     total_comments = comment_area.find_element(By.ID, "cbox_module")
@@ -155,6 +155,7 @@ def comments(driver, title, timestamp):
     for i in comments:
         comment = i.find_element(By.CLASS_NAME, "u_cbox_text_wrap").text
         if comment != '클린봇이 부적절한 표현을 감지한 댓글입니다.' and comment != '작성자에 의해 삭제된 댓글입니다.':
+            comment = sentence_filter(comment)
             good_bad = i.find_element(By.CLASS_NAME, "u_cbox_recomm_set")
             good_bads = good_bad.find_elements(By.CSS_SELECTOR, "a > em")
             sql = f"INSERT INTO comments_db.comments_dist_'{title[:10]}' VALUES ('{title}', '{comment}', '{good_bads[0].text}', '{good_bads[1].text}', '{timestamp}');"
