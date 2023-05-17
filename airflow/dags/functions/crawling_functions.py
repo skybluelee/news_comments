@@ -66,7 +66,7 @@ def main(driver):
         logging.info("execute")
         conn.commit() 
     except: # title이 PK임
-        pass
+        logging.info("main pass")
     return title
 
 # 더보기 클릭
@@ -80,6 +80,7 @@ def more_comments(driver):
 
 # 댓글 통계
 def comments_analysis(driver, title):
+    logging.info("comments_analysis start")
     comment_area = driver.find_element(By.CLASS_NAME, "newsct_wrapper._GRID_TEMPLATE_COLUMN._STICKY_CONTENT")
     total_comment = comment_area.find_element(By.ID, "cbox_module")
     time.sleep(0.5)
@@ -93,7 +94,7 @@ def comments_analysis(driver, title):
     self_removed = comments[1].find_elements(By.CSS_SELECTOR, "span")[0].text
     auto_removed = comments[2].find_elements(By.CSS_SELECTOR, "span")[0].text
 
-    male, female, age_10, age_20, age_30, age_40, age_50, age_60 = '', '', '', '', '', '', '', ''
+    male, female, age_10, age_20, age_30, age_40, age_50, age_60 = -1, -1, -1, -1, -1, -1, -1, -1
     try:
         comments_two = comments_num.find_element(By.CLASS_NAME, "u_cbox_chart_wrap.u_cbox_chart_open")
         comments_sex_age = comments_two.find_element(By.CLASS_NAME, "u_cbox_chart_cont_inner")
@@ -113,26 +114,13 @@ def comments_analysis(driver, title):
         pass
     timestamp = datetime.now()
 
+    logging.info("comments_analysis extraction finish")
     conn, cur = get_MySQL_connection()
-    sql = f"CREATE TABLE IF NOT EXISTS comments_db.users_dist (title varchar(255),\
-                                                                total int(5),  \
-                                                                self_removed int(5), \
-                                                                auto_removed int(5), \
-                                                                male int(3), \
-                                                                female int(3), \
-                                                                age_10 int(3), \
-                                                                age_20 int(3), \
-                                                                age_30 int(3), \
-                                                                age_40 int(3), \
-                                                                age_50 int(3), \
-                                                                age_60 int(3), \
-                                                                timestamp datetime,\
-                                                                primary key (timestamp)\
-                                                                ) engine=InnoDB default charset=utf8;"
+    sql = f"INSERT INTO comments_db.users_dist VALUES ('{title}', {total}, {self_removed}, {auto_removed}, {male}, {female}, {age_10}, {age_20}, {age_30}, {age_40}, {age_50}, {age_60}, '{timestamp}');"
+    logging.info("sql")
+    print(sql)
     cur.execute(sql)
-    sql = f"INSERT INTO comments_db.users_dist VALUES ('{title}', '{total}', '{self_removed}', '{auto_removed}',\
-             '{male}', '{female}', '{age_10}', '{age_20}','{age_30}', '{age_40}', '{age_50}', '{age_60}', '{timestamp}');"
-    cur.execute(sql)
+    logging.info("execute")
     conn.commit()     
 
     return timestamp
@@ -140,24 +128,19 @@ def comments_analysis(driver, title):
 # 전체 댓글 수집
 def comments(driver, title, timestamp):
     conn, cur = get_MySQL_connection()
-    sql = f"CREATE TABLE IF NOT EXISTS comments_db.comments (title varchar(255),\
-                                                            comment varchar(300),  \
-                                                            good int(6), \
-                                                            bad int(6), \
-                                                            timestamp datetime, \
-                                                            primary key (comment, timestamp)\
-                                                            ) engine=InnoDB default charset=utf8;"
-    cur.execute(sql)
+    logging.info("comments_extraction start")
     comment_area = driver.find_element(By.CLASS_NAME, "newsct_wrapper._GRID_TEMPLATE_COLUMN._STICKY_CONTENT")
     total_comments = comment_area.find_element(By.ID, "cbox_module")
     total_comment = total_comments.find_element(By.ID, "cbox_module_wai_u_cbox_content_wrap_tabpanel")
     comments = total_comment.find_elements(By.CSS_SELECTOR, "li")
     for i in comments:
         comment = i.find_element(By.CLASS_NAME, "u_cbox_text_wrap").text
-        if comment != '클린봇이 부적절한 표현을 감지한 댓글입니다.' and comment != '작성자에 의해 삭제된 댓글입니다.':
+        if comment != '클린봇이 부적절한 표현을 감지한 댓글입니다.' and comment != '작성자에 의해 삭제된 댓글입니다.' and comment != '운영규정 미준수로 인해 삭제된 댓글입니다.' :
             comment = sentence_filter(comment)
             good_bad = i.find_element(By.CLASS_NAME, "u_cbox_recomm_set")
             good_bads = good_bad.find_elements(By.CSS_SELECTOR, "a > em")
-            sql = f"INSERT INTO comments_db.comments_dist_'{title[:10]}' VALUES ('{title}', '{comment}', '{good_bads[0].text}', '{good_bads[1].text}', '{timestamp}');"
+            sql = f"INSERT INTO comments_db.comments VALUES ('{title}', '{comment}', '{good_bads[0].text}', '{good_bads[1].text}', '{timestamp}');"
+            logging.info("sql")
+            print(sql)
             cur.execute(sql)
     conn.commit() 

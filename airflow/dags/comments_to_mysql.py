@@ -30,15 +30,15 @@ options.add_argument('--no-sandbox')
 options.add_argument('--disable-dev-shm-usage')
 
 dag = DAG(
-    dag_id = 'Comment_Update',
+    dag_id = 'Comment_Extract',
     start_date = datetime(2023,5,10), # 날짜가 미래인 경우 실행이 안됨
-    end_date = datetime(2023, 5, 13, 6, 0), # UTC기준으로 동작
+    end_date = datetime(2023, 5, 17, 14, 0), # UTC기준으로 동작
     schedule = '0/10 * * * *',  # 10분마다 업데이트
     max_active_runs = 1,
     catchup = False,
     default_args = {
         'retries': 1,
-        'retry_delay': timedelta(minutes=1),
+        'retry_delay': timedelta(minutes=1)
     }
 )
 
@@ -60,11 +60,11 @@ def etl(**context):
 etl = PythonOperator(
     task_id = 'etl',
     python_callable = etl,
+    execution_timeout=timedelta(seconds=600), # 10분내에 성공하지 못하면 retry
     # 메인 기사 링크
     params = {
-        "link": "https://n.news.naver.com/mnews/article/079/0003769435?sid=100",
+        "link": "https://n.news.naver.com/mnews/article/277/0005260463?sid=100"
     },
-    timeout=420, # 7분내에 성공하지 못하면 retry
     dag = dag
 )
 
