@@ -1,15 +1,3 @@
 # news_comments
-
-## Airflow Python Module Installation
-
-#### 먼저 우분투의 소프트웨어 관리 툴인 apt-get을 업데이트하고 파이썬 3.0 pip을 설치한다.
-
-원래는 apt-get update 이후에 python3-pip을 설치하면 되는데 pyopenssl 관련 충돌이 있어서 이를 먼저 해결하고 python3-pip를 설치
-
-```
-sudo apt-get update 
-wget https://bootstrap.pypa.io/get-pip.py
-sudo python3 get-pip.py
-sudo pip3 install pyopenssl --upgrade
-sudo apt-get install -y python3-pip
-```
+네이버 기사의 댓글을 Airflow를 이용해 10분 간격으로 크롤링한 결과를 MySQL에 저장한 후 S3에 업로드한다.
+이후 Zeppelin에서 Spark SQL을 사용하여 데이터를 정리하여 Redshift에 업로드
