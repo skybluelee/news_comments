@@ -79,7 +79,7 @@ def more_comments(driver):
     see_more.click()
 
 # 댓글 통계
-def comments_analysis(driver, title):
+def comments_analysis(driver, title, sql_num):
     logging.info("comments_analysis start")
     comment_area = driver.find_element(By.CLASS_NAME, "newsct_wrapper._GRID_TEMPLATE_COLUMN._STICKY_CONTENT")
     total_comment = comment_area.find_element(By.ID, "cbox_module")
@@ -116,7 +116,7 @@ def comments_analysis(driver, title):
 
     logging.info("comments_analysis extraction finish")
     conn, cur = get_MySQL_connection()
-    sql = f"INSERT INTO comments_db.users_dist VALUES ('{title}', {total}, {self_removed}, {auto_removed}, {male}, {female}, {age_10}, {age_20}, {age_30}, {age_40}, {age_50}, {age_60}, '{timestamp}');"
+    sql = "INSERT INTO comments_db.user_distribution" + sql_num +  f"VALUES ('{title}', {total}, {self_removed}, {auto_removed}, {male}, {female}, {age_10}, {age_20}, {age_30}, {age_40}, {age_50}, {age_60}, '{timestamp}');"
     logging.info("sql")
     print(sql)
     cur.execute(sql)
@@ -126,7 +126,7 @@ def comments_analysis(driver, title):
     return timestamp
 
 # 전체 댓글 수집
-def comments(driver, title, timestamp):
+def comments(driver, title, timestamp, sql_num):
     conn, cur = get_MySQL_connection()
     logging.info("comments_extraction start")
     comment_area = driver.find_element(By.CLASS_NAME, "newsct_wrapper._GRID_TEMPLATE_COLUMN._STICKY_CONTENT")
@@ -139,7 +139,7 @@ def comments(driver, title, timestamp):
             comment = sentence_filter(comment)
             good_bad = i.find_element(By.CLASS_NAME, "u_cbox_recomm_set")
             good_bads = good_bad.find_elements(By.CSS_SELECTOR, "a > em")
-            sql = f"INSERT INTO comments_db.comments VALUES ('{title}', '{comment}', '{good_bads[0].text}', '{good_bads[1].text}', '{timestamp}');"
+            sql = "INSERT INTO comments_db.comments" + sql_num + f"VALUES ('{title}', '{comment}', '{good_bads[0].text}', '{good_bads[1].text}', '{timestamp}');"
             logging.info("sql")
             print(sql)
             cur.execute(sql)

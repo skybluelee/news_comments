@@ -296,9 +296,15 @@ services:
         condition: service_completed_successfully
   selenium:
     container_name: remote_chromedriver
-    image: selenium/standalone-chrome:latest
+    image: selenium/standalone-chrome:v1
     ports:
       - 4444:4444
+    restart: always
+  selenium2: # 수정
+    container_name: remote_chromedriver2
+    image: selenium/standalone-chrome:v2
+    ports:
+      - 4445:4445
     restart: always
 volumes:
   postgres-db-volume:
