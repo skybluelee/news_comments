@@ -41,6 +41,14 @@ curl -LfO 'https://airflow.apache.org/docs/apache-airflow/2.6.0/docker-compose.y
 ```
 vi docker-compose.yaml
 
+...
+x-airflow-common:
+  &airflow-common
+  # In order to add custom dependencies or upgrade provider packages you can use your extended image.
+  # Comment the image line, place your Dockerfile in the directory where you placed the docker-compose.yaml
+  # and uncomment the "build" line below, Then run `docker-compose build` to build the images.
+  image: ${AIRFLOW_IMAGE_NAME:-extend_airflow:latest}
+...
 service:
 ...
   selenium:
@@ -58,7 +66,7 @@ service:
 volumes:
   postgres-db-volume:
 ```
-docker-compose.yaml 파일에 selenium 파트를 추가한다.
+image 이름을 변경하고 docker-compose.yaml 파일에 selenium 파트를 추가한다.
 ## requirements.txt
 ``` 
 vi requirements.txt
