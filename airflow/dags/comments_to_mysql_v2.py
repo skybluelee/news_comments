@@ -47,7 +47,7 @@ dag = DAG(
 def etl(**context):
     sql_num = context["params"]["sql_num"]
     remote_webdriver = 'remote_chromedriver2'
-    with webdriver.Remote(f'{remote_webdriver}:4445/wd/hub', options=options) as driver:
+    with webdriver.Remote(f'{remote_webdriver}:4444/wd/hub', options=options) as driver:
         # Scraping part
         driver.get(context["params"]["link"])
         title = crawling_functions.main(driver)
