@@ -62,7 +62,7 @@ title_1, title_2 = get_title()
 
 mysql_to_s3_user_distribution_1 = SqlToS3Operator(
     task_id = 'mysql_to_s3_user_distribution_1',
-    query = "SELECT * FROM comments_db.comments",
+    query = "SELECT * FROM comments_db.user_distribution_1",
     s3_bucket = s3_bucket,
     s3_key = "user_distribution" + title_1,
     sql_conn_id = "mysql",
@@ -75,7 +75,7 @@ mysql_to_s3_user_distribution_1 = SqlToS3Operator(
 
 mysql_to_s3_comments_1 = SqlToS3Operator(
     task_id = 'mysql_to_s3_comments_1',
-    query = "SELECT * FROM comments_db.comments",
+    query = "SELECT * FROM comments_db.comments_1",
     s3_bucket = s3_bucket,
     s3_key = "comments" + title_1,
     sql_conn_id = "mysql",
@@ -88,7 +88,7 @@ mysql_to_s3_comments_1 = SqlToS3Operator(
 
 mysql_to_s3_user_distribution_2 = SqlToS3Operator(
     task_id = 'mysql_to_s3_user_distribution_2',
-    query = "SELECT * FROM comments_db.comments",
+    query = "SELECT * FROM comments_db.user_distribution_2",
     s3_bucket = s3_bucket,
     s3_key = "user_distribution" + title_2,
     sql_conn_id = "mysql",
@@ -101,7 +101,7 @@ mysql_to_s3_user_distribution_2 = SqlToS3Operator(
 
 mysql_to_s3_comments_2 = SqlToS3Operator(
     task_id = 'mysql_to_s3_comments_2',
-    query = "SELECT * FROM comments_db.comments",
+    query = "SELECT * FROM comments_db.comments_2",
     s3_bucket = s3_bucket,
     s3_key = "comments" + title_2,
     sql_conn_id = "mysql",
