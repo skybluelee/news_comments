@@ -59,7 +59,7 @@ def main(driver):
     time.sleep(1)
     try:
         logging.info("start")
-        sql = f"INSERT INTO comments_db.articles VALUES ('{title}', '{pub}', '{reporter}', '{article}', '{comment_exposed}');"
+        sql = f"INSERT INTO comments_db.articles_temp VALUES ('{title}', '{pub}', '{reporter}', '{article}', '{comment_exposed}');"
         logging.info("sql")
         print(sql)
         cur.execute(sql)

@@ -294,17 +294,35 @@ services:
       <<: *airflow-common-depends-on
       airflow-init:
         condition: service_completed_successfully
-  selenium:
-    container_name: remote_chromedriver
-    image: selenium/standalone-chrome:v1
+  selenium0:
+    container_name: remote_chromedriver0
+    image: selenium/standalone-chrome:v0
     ports:
       - 4444:4444
     restart: always
-  selenium2: # 수정
+  selenium1:
+    container_name: remote_chromedriver1
+    image: selenium/standalone-chrome:v1
+    ports:
+      - 4445:4445
+    restart: always
+  selenium2:
     container_name: remote_chromedriver2
     image: selenium/standalone-chrome:v2
     ports:
-      - 4445:4445
+      - 4446:4446
+    restart: always
+  selenium3:
+    container_name: remote_chromedriver3
+    image: selenium/standalone-chrome:v3
+    ports:
+      - 4447:4447
+    restart: always
+  selenium4:
+    container_name: remote_chromedriver4
+    image: selenium/standalone-chrome:v4
+    ports:
+      - 4448:4448
     restart: always
 volumes:
   postgres-db-volume:

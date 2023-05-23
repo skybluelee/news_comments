@@ -35,7 +35,7 @@ dag = DAG(
     dag_id = 'Comment_Extract_2',
     start_date = datetime(2023,5,10), # 날짜가 미래인 경우 실행이 안됨
     end_date = datetime(2023, 5, 17, 14, 0), # UTC기준으로 동작
-    schedule = '0/10 * * * *',  # 10분마다 업데이트
+    schedule = '4/10 * * * *',  # 10분마다 업데이트
     max_active_runs = 1,
     catchup = False,
     default_args = {
@@ -47,7 +47,7 @@ dag = DAG(
 def etl(**context):
     sql_num = context["params"]["sql_num"]
     remote_webdriver = 'remote_chromedriver2'
-    with webdriver.Remote(f'{remote_webdriver}:4445/wd/hub', options=options) as driver:
+    with webdriver.Remote(f'{remote_webdriver}:4444/wd/hub', options=options) as driver:
         # Scraping part
         driver.get(context["params"]["link"])
         title = crawling_functions.main(driver)
