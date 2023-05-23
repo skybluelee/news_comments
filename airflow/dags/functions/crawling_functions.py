@@ -116,7 +116,7 @@ def comments_analysis(driver, title, sql_num):
 
     logging.info("comments_analysis extraction finish")
     conn, cur = get_MySQL_connection()
-    sql = "INSERT INTO comments_db.user_distribution" + sql_num +  f"VALUES ('{title}', {total}, {self_removed}, {auto_removed}, {male}, {female}, {age_10}, {age_20}, {age_30}, {age_40}, {age_50}, {age_60}, '{timestamp}');"
+    sql = "INSERT INTO comments_db.user_distribution" + sql_num +  f" VALUES ('{title}', {total}, {self_removed}, {auto_removed}, {male}, {female}, {age_10}, {age_20}, {age_30}, {age_40}, {age_50}, {age_60}, '{timestamp}');"
     logging.info("sql")
     print(sql)
     cur.execute(sql)
@@ -139,8 +139,11 @@ def comments(driver, title, timestamp, sql_num):
             comment = sentence_filter(comment)
             good_bad = i.find_element(By.CLASS_NAME, "u_cbox_recomm_set")
             good_bads = good_bad.find_elements(By.CSS_SELECTOR, "a > em")
-            sql = "INSERT INTO comments_db.comments" + sql_num + f"VALUES ('{title}', '{comment}', '{good_bads[0].text}', '{good_bads[1].text}', '{timestamp}');"
+            sql = "INSERT INTO comments_db.comments" + sql_num + f" VALUES ('{title}', '{comment}', '{good_bads[0].text}', '{good_bads[1].text}', '{timestamp}');"
             logging.info("sql")
             print(sql)
-            cur.execute(sql)
+            try:
+                cur.execute(sql)
+            except:
+                pass
     conn.commit() 

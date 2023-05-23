@@ -144,59 +144,7 @@ mysql_to_s3_user_distribution_2 = SqlToS3Operator(
 
 mysql_to_s3_comments_2 = SqlToS3Operator(
     task_id = 'mysql_to_s3_comments_2',
-    query = "SELECT * FROM comments_db.comments_2",
-    s3_bucket = s3_bucket,
-    s3_key = "comments_" + title_2,
-    sql_conn_id = "mysql",
-    aws_conn_id = "aws",
-    verify = False,
-    replace = True,
-    pd_kwargs={"index": False, "header": True},    
-    dag = dag
-)
-
-mysql_to_s3_user_distribution_3 = SqlToS3Operator(
-    task_id = 'mysql_to_s3_user_distribution_3',
-    query = "SELECT * FROM comments_db.user_distribution_3",
-    s3_bucket = s3_bucket,
-    s3_key = "user_distribution_" + title_3,
-    sql_conn_id = "mysql",
-    aws_conn_id = "aws",
-    verify = False,
-    replace = True,
-    pd_kwargs={"index": False, "header": True},    
-    dag = dag
-)
-
-mysql_to_s3_comments_3 = SqlToS3Operator(
-    task_id = 'mysql_to_s3_comments_3',
-    query = "SELECT * FROM comments_db.comments_3",
-    s3_bucket = s3_bucket,
-    s3_key = "comments_" + title_3,
-    sql_conn_id = "mysql",
-    aws_conn_id = "aws",
-    verify = False,
-    replace = True,
-    pd_kwargs={"index": False, "header": True},    
-    dag = dag
-)
-
-mysql_to_s3_user_distribution_4 = SqlToS3Operator(
-    task_id = 'mysql_to_s3_user_distribution_4',
-    query = "SELECT * FROM comments_db.user_distribution_4",
-    s3_bucket = s3_bucket,
-    s3_key = "user_distribution_" + title_4,
-    sql_conn_id = "mysql",
-    aws_conn_id = "aws",
-    verify = False,
-    replace = True,
-    pd_kwargs={"index": False, "header": True},    
-    dag = dag
-)
-
-mysql_to_s3_comments_4 = SqlToS3Operator(
-    task_id = 'mysql_to_s3_comments_4',
-    query = "SELECT * FROM comments_db.comments_4",
+    query = "SELECT * FROM comments_db.comments",
     s3_bucket = s3_bucket,
     s3_key = "comments_" + title_4,
     sql_conn_id = "mysql",
