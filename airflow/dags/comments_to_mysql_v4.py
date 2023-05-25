@@ -34,7 +34,7 @@ options.add_argument('--disable-dev-shm-usage')
 dag = DAG(
     dag_id = 'Comment_Extract_4',
     start_date = datetime(2023,5,10), # 날짜가 미래인 경우 실행이 안됨
-    end_date = datetime(2023, 5, 17, 14, 0), # UTC기준으로 동작
+    end_date = datetime(2023, 5, 24, 12, 8), # UTC기준으로 동작
     schedule = '8/10 * * * *',  # 10분마다 업데이트
     max_active_runs = 1,
     catchup = False,
@@ -50,7 +50,7 @@ def etl(**context):
     with webdriver.Remote(f'{remote_webdriver}:4444/wd/hub', options=options) as driver:
         # Scraping part
         driver.get(context["params"]["link"])
-        title = crawling_functions.main(driver)
+        title, input_time = crawling_functions.main(driver, 4)
         timestamp = crawling_functions.comments_analysis(driver, title, sql_num)
 
         while(1): # 모든 댓글이 나올때까지 더보기 클릭
@@ -58,7 +58,7 @@ def etl(**context):
                 crawling_functions.more_comments(driver)
             except:
                 break
-        crawling_functions.comments(driver, title, timestamp, sql_num)
+        crawling_functions.comments(driver, title, timestamp, sql_num, input_time)
 
 #---------------------------------------------------------------
 # link 수정!   
@@ -68,8 +68,8 @@ etl = PythonOperator(
     execution_timeout=timedelta(seconds=600), # 10분내에 성공하지 못하면 retry
     # 메인 기사 링크
     params = {
-        "link": "https://n.news.naver.com/mnews/article/277/0005260463?sid=100",
-        "sql_num" : "_2"
+        "link": "https://n.news.naver.com/article/057/0001744537?ntype=RANKING",
+        "sql_num" : "_4"
     },
     dag = dag
 )

@@ -21,14 +21,27 @@ def get_MySQL_connection():
     cur = conn.cursor()
     return conn, cur
 
-def get_title():
+def article_update():
     conn, cur = get_MySQL_connection()
-    sql = "SELECT title FROM comments_db.articles_temp;"
+    sql = "SELECT * FROM comments_db.articles_temp;"
     df = pd.read_sql_query(sql,conn)
     for i in range(5):
-        sql = f"INSERT INTO comments_db.articles VALUES ('{df['title'][i]}', '{df['pub'][i]}', '{df['reporter'][i]}', '{df['article'][i]}', '{df['comment_exposed'][i]}');"
+        title, pub, reporter, article, comment_exposed, input_time = df.loc[i, 'title'], df.loc[i, 'pub'], df.loc[i, 'reporter'], df.loc[i, 'article'], df.loc[i, 'comment_exposed'], df.loc[i, 'written_time']
+        sql = f"INSERT INTO comments_db.articles VALUES ('{title}', '{pub}', '{reporter}', '{article}', '{comment_exposed}', '{input_time}');"
+        cur.execute(sql) 
+    conn.commit()        
+
+def get_title():
+    title_list = [0,0,0,0,0]
+    conn, cur = get_MySQL_connection()
+    sql = "SELECT * FROM comments_db.articles_temp;"
+    df = pd.read_sql_query(sql,conn)
+    for i in range(5):
+        title = df.loc[i, 'title']
+        id = df.loc[i, 'id']
+        title_list[id] = title
         cur.execute(sql)
-    return df['title'][0], df['title'][1], df['title'][2], df['title'][3], df['title'][4]
+    return title_list[0], title_list[1], title_list[2], title_list[3], title_list[4]
 
 def delete_table():
     conn, cur = get_MySQL_connection()
@@ -71,6 +84,12 @@ dag = DAG(
 etl = PythonOperator(
     task_id = 'delete_table',
     python_callable = delete_table,
+    dag = dag
+)
+
+article_update = PythonOperator(
+    task_id = 'article_update',
+    python_callable = article_update,
     dag = dag
 )
 
@@ -144,7 +163,59 @@ mysql_to_s3_user_distribution_2 = SqlToS3Operator(
 
 mysql_to_s3_comments_2 = SqlToS3Operator(
     task_id = 'mysql_to_s3_comments_2',
-    query = "SELECT * FROM comments_db.comments",
+    query = "SELECT * FROM comments_db.comments_2",
+    s3_bucket = s3_bucket,
+    s3_key = "comments_" + title_2,
+    sql_conn_id = "mysql",
+    aws_conn_id = "aws",
+    verify = False,
+    replace = True,
+    pd_kwargs={"index": False, "header": True},    
+    dag = dag
+)
+
+mysql_to_s3_user_distribution_3 = SqlToS3Operator(
+    task_id = 'mysql_to_s3_user_distribution_3',
+    query = "SELECT * FROM comments_db.user_distribution_3",
+    s3_bucket = s3_bucket,
+    s3_key = "user_distribution_" + title_3,
+    sql_conn_id = "mysql",
+    aws_conn_id = "aws",
+    verify = False,
+    replace = True,
+    pd_kwargs={"index": False, "header": True},    
+    dag = dag
+)
+
+mysql_to_s3_comments_3 = SqlToS3Operator(
+    task_id = 'mysql_to_s3_comments_3',
+    query = "SELECT * FROM comments_db.comments_3",
+    s3_bucket = s3_bucket,
+    s3_key = "comments_" + title_3,
+    sql_conn_id = "mysql",
+    aws_conn_id = "aws",
+    verify = False,
+    replace = True,
+    pd_kwargs={"index": False, "header": True},    
+    dag = dag
+)
+
+mysql_to_s3_user_distribution_4 = SqlToS3Operator(
+    task_id = 'mysql_to_s3_user_distribution_4',
+    query = "SELECT * FROM comments_db.user_distribution_4",
+    s3_bucket = s3_bucket,
+    s3_key = "user_distribution_" + title_4,
+    sql_conn_id = "mysql",
+    aws_conn_id = "aws",
+    verify = False,
+    replace = True,
+    pd_kwargs={"index": False, "header": True},    
+    dag = dag
+)
+
+mysql_to_s3_comments_4 = SqlToS3Operator(
+    task_id = 'mysql_to_s3_comments_4',
+    query = "SELECT * FROM comments_db.comments_4",
     s3_bucket = s3_bucket,
     s3_key = "comments_" + title_4,
     sql_conn_id = "mysql",
@@ -155,4 +226,4 @@ mysql_to_s3_comments_2 = SqlToS3Operator(
     dag = dag
 )
 
-mysql_to_s3_user_distribution_0 >> mysql_to_s3_comments_0 >> mysql_to_s3_user_distribution_1 >> mysql_to_s3_comments_1 >> mysql_to_s3_user_distribution_2 >> mysql_to_s3_comments_2 >> mysql_to_s3_user_distribution_3 >> mysql_to_s3_comments_3 >> mysql_to_s3_user_distribution_4 >> mysql_to_s3_comments_4 >> etl
+article_update >> mysql_to_s3_user_distribution_0 >> mysql_to_s3_comments_0 >> mysql_to_s3_user_distribution_1 >> mysql_to_s3_comments_1 >> mysql_to_s3_user_distribution_2 >> mysql_to_s3_comments_2 >> mysql_to_s3_user_distribution_3 >> mysql_to_s3_comments_3 >> mysql_to_s3_user_distribution_4 >> mysql_to_s3_comments_4 >> etl

@@ -8,7 +8,7 @@ import time
 import os
 import urllib.request
 from selenium.webdriver.common.keys import Keys
-from datetime import datetime
+from datetime import datetime, timedelta
 from airflow.providers.mysql.hooks.mysql import MySqlHook
 import logging
 
@@ -30,7 +30,7 @@ def get_MySQL_connection():
     return conn, cur
 
 # 출판사, 제목, 기자, 본문, 댓글창
-def main(driver):
+def main(driver, num):
     time.sleep(10)
     total = driver.find_element(By.CLASS_NAME, "end_container")
     title_area = total.find_element(By.CLASS_NAME, "newsct_wrapper._GRID_TEMPLATE_COLUMN._STICKY_CONTENT")
@@ -42,6 +42,10 @@ def main(driver):
     reporter = rep_info.text
     article_info = title_area.find_element(By.ID, "dic_area")
     article = article_info.text
+    input_area = title_area.find_element(By.CLASS_NAME, "media_end_head_info_datestamp")
+    input_area2 = input_area.find_element(By.CLASS_NAME, "media_end_head_info_datestamp_bunch")
+    input_time = input_area2.find_element(By.CSS_SELECTOR, "span").get_attribute("data-date-time")
+    input_time = datetime.strptime(input_time, '%Y-%m-%d %H:%M:%S')
     try: # 호감순 댓글 확인 가능
         more_comments = title_area.find_element(By.CLASS_NAME, "u_cbox_btn_view_comment")
         comment_exposed = 'yes'
@@ -59,7 +63,7 @@ def main(driver):
     time.sleep(1)
     try:
         logging.info("start")
-        sql = f"INSERT INTO comments_db.articles_temp VALUES ('{title}', '{pub}', '{reporter}', '{article}', '{comment_exposed}');"
+        sql = f"INSERT INTO comments_db.articles_temp VALUES ({num}, '{title}', '{pub}', '{reporter}', '{article}', '{comment_exposed}', '{input_time}');"
         logging.info("sql")
         print(sql)
         cur.execute(sql)
@@ -67,7 +71,7 @@ def main(driver):
         conn.commit() 
     except: # title이 PK임
         logging.info("main pass")
-    return title
+    return title, input_time
 
 # 더보기 클릭
 def more_comments(driver):
@@ -112,7 +116,8 @@ def comments_analysis(driver, title, sql_num):
         age_10, age_20, age_30, age_40, age_50, age_60 = age_list[0], age_list[1], age_list[2], age_list[3], age_list[4], age_list[5][:-1]
     except:
         pass
-    timestamp = datetime.now()
+    time_now = datetime.now()+ timedelta(hours=9)
+    timestamp = time_now.strftime('%Y-%m-%d %H:%M:%S')
 
     logging.info("comments_analysis extraction finish")
     conn, cur = get_MySQL_connection()
@@ -126,7 +131,7 @@ def comments_analysis(driver, title, sql_num):
     return timestamp
 
 # 전체 댓글 수집
-def comments(driver, title, timestamp, sql_num):
+def comments(driver, title, timestamp, sql_num, input_time):
     conn, cur = get_MySQL_connection()
     logging.info("comments_extraction start")
     comment_area = driver.find_element(By.CLASS_NAME, "newsct_wrapper._GRID_TEMPLATE_COLUMN._STICKY_CONTENT")
@@ -139,7 +144,7 @@ def comments(driver, title, timestamp, sql_num):
             comment = sentence_filter(comment)
             good_bad = i.find_element(By.CLASS_NAME, "u_cbox_recomm_set")
             good_bads = good_bad.find_elements(By.CSS_SELECTOR, "a > em")
-            sql = "INSERT INTO comments_db.comments" + sql_num + f" VALUES ('{title}', '{comment}', '{good_bads[0].text}', '{good_bads[1].text}', '{timestamp}');"
+            sql = "INSERT INTO comments_db.comments" + sql_num + f" VALUES ('{title}', '{comment}', '{good_bads[0].text}', '{good_bads[1].text}', '{timestamp}', '{input_time}');"
             logging.info("sql")
             print(sql)
             try:

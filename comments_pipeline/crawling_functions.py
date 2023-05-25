@@ -23,6 +23,10 @@ def main(driver):
     reporter = rep_info.text
     article_info = title_area.find_element(By.ID, "dic_area")
     article = article_info.text
+    input_area = title_area.find_element(By.CLASS_NAME, "media_end_head_info_datestamp")
+    input_area2 = input_area.find_element(By.CLASS_NAME, "media_end_head_info_datestamp_bunch")
+    input_time = input_area2.find_element(By.CSS_SELECTOR, "span").get_attribute("data-date-time")
+    input_time = datetime.strptime(input_time, '%Y-%m-%d %H:%M:%S')
 
     try: # 호감순 댓글 확인 가능
         more_comments = title_area.find_element(By.CLASS_NAME, "u_cbox_btn_view_comment")
@@ -31,7 +35,7 @@ def main(driver):
     more_comments.click()
 
     time.sleep(0.5)
-    return pub, title, reporter, article
+    return pub, title, reporter, article, input_time
 
 # 더보기 클릭
 def more_comments(driver):
