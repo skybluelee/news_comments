@@ -47,6 +47,7 @@
 **위 결과에서 정치 기사의 경우 40, 50이 60에 비해 상대적으로 좋아요를 누르는 경우가 많고 여성 비율은 주로 40이며 좋아요 수에는 미미한 영향을 미쳤을 것이라 추정된다.**
 
 번외로 좋아요 비율이 높을 수록 댓글 순위의 변동이 전자에 비해 심했는데, 좋아요를 누르는 일이 더 많기 때문이라고 생각한다.
+
 <img width="80%" src="https://github.com/skybluelee/news_comments/assets/107929903/d1d95534-2253-4f3f-9188-f47f4e77fafb"/>
 <img width="80%" src="https://github.com/skybluelee/news_comments/assets/107929903/78f4cfcb-af36-4e86-ba49-752fc98ca49e"/>
 <img width="80%" src="https://github.com/skybluelee/news_comments/assets/107929903/59074c1e-cab5-4f6f-af51-d049691cf41a"/>
