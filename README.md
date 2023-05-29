@@ -32,6 +32,13 @@
 <img width="80%" src="https://github.com/skybluelee/news_comments/assets/107929903/cddfca29-8c1d-4071-8c1e-f3ca6ed58adb"/>
 
 분노할 만한 사건의 경우 전체 댓글 당 좋아요의 비율이 최소 2이상이 나왔기 때문이다. 정치 댓글의 경우 좋아요의 비율이 1~2 사이인 것을 감안하면 좋아요를 더 많은 사람이 누르는 것을 확인할 수 있다.
+<img width="80%" src="https://github.com/skybluelee/news_comments/assets/107929903/55b5fed3-d2fb-48fd-a7e7-69a85e069614"/>
+
+상위 10개의 댓글의 위치는 거의 변하지 않았다.
+
+<img width="80%" src="https://github.com/skybluelee/news_comments/assets/107929903/02670e1b-227d-49ac-907e-88cd88aac0bb"/>
+
+또한 여성 비율이 30% 가까이 가거나, 30%가 넘는 경우가 많았다.
 # 수집 시간
 ## 수집 시간이 9시 ~ 13시인 경우
 <img width="80%" src="https://github.com/skybluelee/news_comments/assets/107929903/0a5c647d-d3ec-44cf-9a0c-45cbc03c906b"/>
