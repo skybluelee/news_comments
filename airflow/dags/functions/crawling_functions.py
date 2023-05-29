@@ -21,6 +21,8 @@ def sentence_filter(intro):
             intro = intro[:idx] + '^' + intro[idx + 1:]
         elif value == '"':
             intro = intro[:idx] + '*' + intro[idx + 1:]
+        elif value == "[" or value == "]":
+            intro = intro[:idx] + '&' + intro[idx + 1:]
     return intro
 
 def get_MySQL_connection():
