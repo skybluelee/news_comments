@@ -11,4 +11,7 @@
 성별과 나이대의 경우 공개가 되는 기사와 공개가 되지 않는 기사가 존재하며 공개가 되더라도 댓글 수가 100개 이상이 되어야 공개됨.
 
 # 최신순만 존재하는 경우
-<img width="80%" src="https://github.com/skybluelee/news_comments/assets/107929903/1bb26ff7-d7e7-4ee2-a490-8c5cc18852ce"/>
+## 댓글의 수가 적은 경우
+<img width="80%" src="https://github.com/skybluelee/news_comments/assets/107929903/dec950e4-87d1-45d3-943a-f620e4261856"/>
+<img width="80%" src="https://github.com/skybluelee/news_comments/assets/107929903/a9bf94cd-f0a5-4a46-bdd5-568b2135a357"/>
+좋아요 수의 전반적인 증가세를 확인할 수 있고 좋아요 상위 10개의 댓글의 위치의 변동이 심하다. 밑에서 언급할 뉴스와의 시간대를 비교할 때 댓글 순위의 변동은 댓글이 적기 때문이로 추정된다.
