@@ -28,6 +28,8 @@ selenium/standalone-chrome      latest    b4da11a7c583   2 days ago     1.29GB
 selenium/standalone-chrome      v1        b4da11a7c583   2 days ago     1.29GB
 ```
 위와 같이 tag가 바뀐 image가 생성된다
+위의 결과가 실제로 여러 포트에서 동시에 실행하지는 않는다. 동일한 4444포트를 사용하므로 여러 dag를 한번에 실행할 수록 더 오랜 시간이 소요된다.
+크롤링 자체가 실행됨에 따라 일정한 시간마다 데이터를 얻기 위해 위와 같이 설정하였다(데이터가 많으면 dag 실행이 밀리므로 일정한 주기로 크롤링하는 것이 불가능하다).
 ## docker-compose.yaml
 ```
 curl -LfO 'https://airflow.apache.org/docs/apache-airflow/2.6.0/docker-compose.yaml'
