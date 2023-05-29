@@ -21,3 +21,22 @@
 <img width="80%" src="https://github.com/skybluelee/news_comments/assets/107929903/50916533-8141-4b53-b2ca-3b1390cbdf3f"/>
 
 상위 7개 가량의 댓글의 좋아요 수는 처음과 마지막이 유사하며 위치 변동 또한 적다. 하위 3개 가량의 댓글의 경우 상위 10개 이내로 새로 들어오거나 나가는 경우가 많다. 이 부분은 최신순의 경우 댓글이 많아질 수록 묻히게 되고 댓글이 적을 때와 달리 전체 댓글을 보는 것이 아닌 눈에 보이는 댓글에 대해 좋아요를 누르기 때문으로 추정된다.
+
+최신순의 경우 성별, 나이대와 좋아요 간의 유사점을 찾지 못함
+
+# 호감순이 존재하는 경우
+## 수집 시간이 9시 ~ 13시인 경우
+<img width="80%" src="https://github.com/skybluelee/news_comments/assets/107929903/0a5c647d-d3ec-44cf-9a0c-45cbc03c906b"/>
+
+40대의 댓글 비율은 9시 ~ 12시까지는 거의 동일하며 12시부터 비율이 빠르게 증가하였다. 이는 회사의 점심 시간과 연관이 있어보인다.
+# 성별과 좋아요 수
+여성의 경우 남성에 비해 댓글 비율이 적으며 정치 분야의 경우 비율 차이는 더 심하다. 정치 기사의 경우 남성의 댓글 비율이 대부분이 80% 이상이다.
+여성과 남성의 비율이 상대적으로 적은 경우 좋아요를 누르는 비율이 감소하였다.
+<img width="80%" src="https://github.com/skybluelee/news_comments/assets/107929903/c8bc7986-c5e7-4f61-966c-0b5b806e1280"/>
+<img width="80%" src="https://github.com/skybluelee/news_comments/assets/107929903/2909e485-9b9d-4fa1-aade-3479e3fca909"/>
+
+위의 경우 여성의 비율이 30%가 넘어가며 이때 전체 댓글당 좋아요의 비율이 0.6을 넘지 못한다.
+<img width="80%" src="https://github.com/skybluelee/news_comments/assets/107929903/60a311f9-f41b-456a-9b05-08b6d19328e3"/>
+<img width="80%" src="https://github.com/skybluelee/news_comments/assets/107929903/d0830d84-57d6-44a3-a408-245fb8fdb460"/>
+
+반면 여성의 비율이 낮은 경우 좋아요의 비율이 2.5에 근사한 결과가 나왔다.
