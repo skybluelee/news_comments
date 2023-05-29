@@ -1,27 +1,7 @@
 import matplotlib.pyplot as plt
 import pandas as pd
 
-df1 = pd.read_csv('D:\\good_yes_order\\9_12\\갑자기 외국인.csv')
-df2 = pd.read_csv('D:\\good_yes_order\\9_12\\김남국 넷마블.csv')
-df3 = pd.read_csv('D:\\good_yes_order\\9_12\\성폭행 가해자.csv')
-df4 = pd.read_csv('D:\\good_yes_order\\9_12\\이 강성팬덤.csv')
-df1 = pd.read_csv('D:\\good_yes_order\\12_18\\국회 오염수.csv')
-df2 = pd.read_csv('D:\\good_yes_order\\12_18\\말다툼하다.csv')
-df3 = pd.read_csv('D:\\good_yes_order\\12_18\\문 임기 중.csv')
-df4 = pd.read_csv('D:\\good_yes_order\\12_18\\비명계 욕설.csv')
-df5 = pd.read_csv('D:\\good_yes_order\\12_18\\앱으로만난.csv')
-df6 = pd.read_csv('D:\\good_yes_order\\12_18\\야 노란봉투법.csv')
-df1 = pd.read_csv('D:\\good_yes_order\\18_21\\700피트.csv')
-df2 = pd.read_csv('D:\\good_yes_order\\18_21\\숨진 김군.csv')
-df3 = pd.read_csv('D:\\good_yes_order\\18_21\\승무원 겁에.csv')
-df4 = pd.read_csv('D:\\good_yes_order\\18_21\\여자친구 병원.csv')
-df5 = pd.read_csv('D:\\good_yes_order\\18_21\\이선희.csv')
-df6 = pd.read_csv('D:\\good_yes_order\\18_21\\조국 달 때문에.csv')
-df7 = pd.read_csv('D:\\good_yes_order\\18_21\\중국 한국과 반도체.csv')
-df8 = pd.read_csv('D:\\good_yes_order\\18_21\\하태경 김남국 폭로자.csv')
-df9 = pd.read_csv('D:\\good_yes_order\\18_21\\학교 주차장.csv')
-
-
+df = pd.read_csv('D:\\good_yes_order\\.csv')
 
 # =============================================================================
 # 좋아요 순으로 확인 불가능한 뉴스
