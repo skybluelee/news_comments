@@ -48,7 +48,7 @@
 
 <img width="80%" src="https://github.com/skybluelee/news_comments/assets/107929903/cddfca29-8c1d-4071-8c1e-f3ca6ed58adb"/>
 
-분노할 만한 사건의 경우 전체 댓글 당 좋아요의 비율이 최소 2이상이 나왔기 때문이다. 정치 댓글의 경우 좋아요의 비율이 1~2 사이인 것을 감안하면 좋아요를 더 많은 사람이 누르는 것을 확인할 수 있다.
+분노할 만한 사건의 경우 전체 댓글 당 좋아요의 비율이 최소 2이상이 나왔기 때문이다. 정치 기사의 경우 댓글 당 좋아요의 비율이 주로 2 이하인 것을 감안하면 좋아요를 더 많은 사람이 누르는 것을 확인할 수 있다.
 <img width="80%" src="https://github.com/skybluelee/news_comments/assets/107929903/55b5fed3-d2fb-48fd-a7e7-69a85e069614"/>
 
 상위 10개의 댓글의 위치는 거의 변하지 않았다.
@@ -61,14 +61,3 @@
 <img width="80%" src="https://github.com/skybluelee/news_comments/assets/107929903/0a5c647d-d3ec-44cf-9a0c-45cbc03c906b"/>
 
 40대의 댓글 비율은 9시 ~ 12시까지는 거의 동일하며 12시부터 비율이 빠르게 증가하였다. 이는 회사의 점심 시간과 연관이 있어보인다.
-# 성별과 좋아요 수
-여성의 경우 남성에 비해 댓글 비율이 적으며 정치 분야의 경우 비율 차이는 더 심하다. 정치 기사의 경우 남성의 댓글 비율이 대부분이 80% 이상이다.
-여성과 남성의 비율이 상대적으로 적은 경우 좋아요를 누르는 비율이 감소하였다.
-<img width="80%" src="https://github.com/skybluelee/news_comments/assets/107929903/c8bc7986-c5e7-4f61-966c-0b5b806e1280"/>
-<img width="80%" src="https://github.com/skybluelee/news_comments/assets/107929903/2909e485-9b9d-4fa1-aade-3479e3fca909"/>
-
-위의 경우 여성의 비율이 30%가 넘어가며 이때 전체 댓글당 좋아요의 비율이 0.6을 넘지 못한다.
-<img width="80%" src="https://github.com/skybluelee/news_comments/assets/107929903/60a311f9-f41b-456a-9b05-08b6d19328e3"/>
-<img width="80%" src="https://github.com/skybluelee/news_comments/assets/107929903/d0830d84-57d6-44a3-a408-245fb8fdb460"/>
-
-반면 여성의 비율이 낮은 경우 좋아요의 비율이 2.5에 근사한 결과가 나왔다.
