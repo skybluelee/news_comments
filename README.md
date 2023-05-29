@@ -14,4 +14,10 @@
 ## 댓글의 수가 적은 경우
 <img width="80%" src="https://github.com/skybluelee/news_comments/assets/107929903/dec950e4-87d1-45d3-943a-f620e4261856"/>
 <img width="80%" src="https://github.com/skybluelee/news_comments/assets/107929903/a9bf94cd-f0a5-4a46-bdd5-568b2135a357"/>
-좋아요 수의 전반적인 증가세를 확인할 수 있고 좋아요 상위 10개의 댓글의 위치의 변동이 심하다. 밑에서 언급할 뉴스와의 시간대를 비교할 때 댓글 순위의 변동은 댓글이 적기 때문이로 추정된다.
+
+좋아요 수의 전반적인 증가세를 확인할 수 있고 좋아요 상위 10개의 댓글의 위치의 변동이 심하다. 댓글이 적은 경우 조금 더 많은 댓글을 확인하고 공감이 가는 댓글에 좋아요를 눌렀을 거라고 추측한다.
+## 댓글의 수가 많은 경우
+<img width="80%" src="https://github.com/skybluelee/news_comments/assets/107929903/51e4fc4c-76de-431a-90fd-1ce48e3f55e7"/>
+<img width="80%" src="https://github.com/skybluelee/news_comments/assets/107929903/50916533-8141-4b53-b2ca-3b1390cbdf3f"/>
+
+상위 7개 가량의 댓글의 좋아요 수는 처음과 마지막이 유사하며 위치 변동 또한 적다. 하위 3개 가량의 댓글의 경우 상위 10개 이내로 새로 들어오거나 나가는 경우가 많다. 이 부분은 최신순의 경우 댓글이 많아질 수록 묻히게 되고 댓글이 적을 때와 달리 전체 댓글을 보는 것이 아닌 눈에 보이는 댓글에 대해 좋아요를 누르기 때문으로 추정된다.
