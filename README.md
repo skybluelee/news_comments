@@ -26,17 +26,18 @@
 
 # 호감순이 존재하는 경우
 ## 정치 기사인 경우
-### 연령 비율
-정치 기사의 경우 댓글 당 좋아요의 수가 연령 분포에 따라 다른 경향이 존재했다.
-
+정치 기사의 경우 댓글 당 좋아요의 수가 성별과 연령 분포에 따라 다른 경향이 존재했다.
+<img width="80%" src="https://github.com/skybluelee/news_comments/assets/107929903/95170f53-4e55-42c5-9792-a3ad22fa2f30"/>
 <img width="80%" src="https://github.com/skybluelee/news_comments/assets/107929903/51cc7965-efd6-45d3-86a5-e3e243ac4482"/>
 <img width="80%" src="https://github.com/skybluelee/news_comments/assets/107929903/c723b33d-a9a3-455a-a7ff-fad3a025da7d"/>
 
-댓글 당 좋아요 수 비율이 1.5 이하인 경우, 40보다 50, 60의 비율이 높았다.
+댓글 당 좋아요 수 비율이 1.5 이하인 경우, 40보다 50, 60의 비율이 높았으며, 여성의 비율이 20% 미만이다.
+<img width="80%" src="https://github.com/skybluelee/news_comments/assets/107929903/7ef4abd6-7bb7-42b3-8327-f53b6b58b5df"/>
 <img width="80%" src="https://github.com/skybluelee/news_comments/assets/107929903/c1167b31-e468-4a10-8831-f0e72b17fda3"/>
 <img width="80%" src="https://github.com/skybluelee/news_comments/assets/107929903/9cf3abbc-37e6-48ee-bea0-9d16cc39f80a"/>
 
-반면에 댓글 당 좋아요 수 비율이 2 이상인 경우, 40이 50, 60보다 비율이 높았다.
+반면에 댓글 당 좋아요 수 비율이 2 이상인 경우, 40이 50, 60보다 비율이 높았으며, 여성의 비율이 20% 이상이다.
+**위 결과에서 정치 기사의 경우 40이 상대적으로 좋아요를 누르는 경우가 많고 여성 비율이 증가할 수록 좋아요 수도 증가함을 추측할 수 있다.**
 ## 정치 기사가 아닌 경우
 단순한 사실 보고가 아닌 인간이 분노하는 기사의 경우 좋아요의 수가 더 높았다. 이와 같이 판단한 근거는 아래와 같이
 
