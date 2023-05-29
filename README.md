@@ -37,7 +37,12 @@
 <img width="80%" src="https://github.com/skybluelee/news_comments/assets/107929903/7ef4abd6-7bb7-42b3-8327-f53b6b58b5df"/>
 
 반면에 댓글 당 좋아요 수 비율이 2 이상인 경우, 40이 50, 60보다 비율이 높았으며, 여성의 비율이 20% 이상이다.
+
 **위 결과에서 정치 기사의 경우 40이 상대적으로 좋아요를 누르는 경우가 많고 여성 비율이 증가할 수록 좋아요 수도 증가함을 추측할 수 있다.**
+
+번외로 후자의 경우가 댓글 순위의 변동이 전자에 비해 심했는데, 좋아요를 누르는 일이 더 많기 때문이라고 생각한다.
+<img width="80%" src="https://github.com/skybluelee/news_comments/assets/107929903/d1d95534-2253-4f3f-9188-f47f4e77fafb"/>
+<img width="80%" src="https://github.com/skybluelee/news_comments/assets/107929903/78f4cfcb-af36-4e86-ba49-752fc98ca49e"/>
 ## 정치 기사가 아닌 경우
 단순한 사실 보고가 아닌 인간이 분노하는 기사의 경우 좋아요의 수가 더 높았다. 이와 같이 판단한 근거는 아래와 같이
 
