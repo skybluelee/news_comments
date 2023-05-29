@@ -31,7 +31,7 @@
 <img width="80%" src="https://github.com/skybluelee/news_comments/assets/107929903/c723b33d-a9a3-455a-a7ff-fad3a025da7d"/>
 <img width="80%" src="https://github.com/skybluelee/news_comments/assets/107929903/95170f53-4e55-42c5-9792-a3ad22fa2f30"/>
 
-댓글 당 좋아요 수 비율이 1.5 이하인 경우, 40보다 50, 60의 비율이 높았으며, 여성의 비율이 20% 미만이다.
+댓글 당 좋아요 수 비율이 1.5 이하인 경우, 60의 비율이 높았으며, 여성의 비율이 20% 미만이다.
 <img width="80%" src="https://github.com/skybluelee/news_comments/assets/107929903/c1167b31-e468-4a10-8831-f0e72b17fda3"/>
 <img width="80%" src="https://github.com/skybluelee/news_comments/assets/107929903/9cf3abbc-37e6-48ee-bea0-9d16cc39f80a"/>
 <img width="80%" src="https://github.com/skybluelee/news_comments/assets/107929903/7ef4abd6-7bb7-42b3-8327-f53b6b58b5df"/>
