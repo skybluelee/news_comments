@@ -51,6 +51,7 @@
 <img width="80%" src="https://github.com/skybluelee/news_comments/assets/107929903/d1d95534-2253-4f3f-9188-f47f4e77fafb"/>
 <img width="80%" src="https://github.com/skybluelee/news_comments/assets/107929903/78f4cfcb-af36-4e86-ba49-752fc98ca49e"/>
 <img width="80%" src="https://github.com/skybluelee/news_comments/assets/107929903/59074c1e-cab5-4f6f-af51-d049691cf41a"/>
+
 ## 정치 기사가 아닌 경우
 단순한 사실 보고가 아닌 인간이 분노하는 기사의 경우 좋아요의 수가 더 높았다. 이와 같이 판단한 근거는 아래와 같이
 
